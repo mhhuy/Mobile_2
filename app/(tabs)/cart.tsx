@@ -48,7 +48,7 @@ const CartScreen = () => {
       <Image source={{ uri: item.imageUrl }} style={styles.image} />
       <View style={styles.itemDetails}>
         <Text style={styles.itemName}>{item.name}</Text>
-        <Text style={styles.itemPrice}>{item.price.toLocaleString()} VND</Text>
+        <Text style={styles.itemPrice}>{item.price.toLocaleString()} đ</Text>
         <View style={styles.quantityContainer}>
           <TouchableOpacity onPress={() => decreaseQuantity(item.id)} style={styles.quantityButton}>
             <Text style={styles.quantityButtonText}>-</Text>

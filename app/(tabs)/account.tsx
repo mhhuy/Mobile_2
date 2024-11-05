@@ -1,70 +1,149 @@
-import { Image, StyleSheet, Platform } from 'react-native';
+import { router } from 'expo-router';
+import React, { useState } from 'react';
+import { View, Text, Image, StyleSheet, Alert, ScrollView, TouchableOpacity } from 'react-native';
+import { logoutUser } from '../api/auth';
 
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+const AccountScreen = () => {
+  
+  const [message, setMessage] = useState(""); // Thông báo đăng nhập
+  const [error, setError] = useState("")
+  const handleLogout = async () => {
+    try {
+      const data = await logoutUser(); // Gọi hàm đăng xuất
+      setMessage(data.message); // Cập nhật thông báo thành công
+      setError(""); // Xóa thông báo lỗi
+      router.push({pathname: "./"});
+    } catch (error) {
+      setMessage(""); // Xóa thông báo thành công nếu có lỗi
+      setError("Đăng nhập thất bại!"); // Thông báo lỗi khi đăng nhập không thành công
+    }
+    
+  };
 
-export default function HomeScreen() {
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
+    <ScrollView style={styles.container}>
+      {/* Hình đại diện và thông tin người dùng */}
+      <View style={styles.profileHeader}>
         <Image
-          source={require('@/assets/images/R.png')}
-          style={styles.reactLogo}
+          source={{ uri: '../../assets/images/react-logo.png' }}
+          style={styles.avatar}
         />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">My account!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({ ios: 'cmd + d', android: 'cmd + m' })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          Tap the Explore tab to learn more about what's included in this starter app.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          When you're ready, run{' '}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+        <View style={styles.userInfo}>
+          <Text style={styles.username}>Đồng Minh Huy</Text>
+        </View>
+      </View>
+
+      {/* Thông tin tài khoản */}
+      <View style={styles.profileInfo}>
+        <Text style={styles.label}>Địa chỉ:</Text>
+        <Text style={styles.infoText}>122 Tăng Nhơn Phú, P. Tăng Nhơn Phú A, TP. Thủ Đức, TP.HCM</Text>
+
+        <Text style={styles.label}>Số điện thoại:</Text>
+        <Text style={styles.infoText}>0348416852</Text>
+
+        <Text style={styles.label}>Email:</Text>
+        <Text style={styles.infoText}>minhhuy@gmail.com</Text>
+      </View>
+
+      {/* Nút đăng xuất (cải tiến) */}
+      <View style={styles.logoutButtonContainer}>
+        <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
+          <Text style={styles.logoutButtonText}>Đăng xuất</Text>
+        </TouchableOpacity>
+      </View>
+    </ScrollView>
   );
-}
+};
 
 const styles = StyleSheet.create({
-  titleContainer: {
+  container: {
+    flex: 1,
+    backgroundColor: '#f1f1f1',
+    paddingHorizontal: 20,
+    paddingTop: 40,
+  },
+  profileHeader: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 8,
+    marginBottom: 30,
+    backgroundColor: '#fff',
+    padding: 20,
+    borderRadius: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 5 },
+    shadowOpacity: 0.1,
+    shadowRadius: 10,
+    elevation: 5,
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
+  avatar: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    borderWidth: 2,
+    borderColor: '#ff5c5c',
   },
-  reactLogo: {
-    height: 250,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
+  userInfo: {
+    marginLeft: 20,
+  },
+  username: {
+    fontSize: 26,
+    fontWeight: 'bold',
+    color: '#333',
+  },
+  welcomeText: {
+    marginTop: 5,
+    color: '#888',
+  },
+  profileInfo: {
+    marginVertical: 20,
+    backgroundColor: '#fff',
+    padding: 20,
+    borderRadius: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 5 },
+    shadowOpacity: 0.1,
+    shadowRadius: 10,
+    elevation: 5,
+  },
+  label: {
+    fontWeight: 'bold',
+    fontSize: 16,
+    color: '#555',
+    marginBottom: 5,
+  },
+  infoText: {
+    fontSize: 16,
+    color: '#777',
+    marginBottom: 15,
+  },
+  logoutButtonContainer: {
+    marginTop: 20,
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 5 },
+    shadowOpacity: 0.1,
+    shadowRadius: 10,
+    elevation: 5,
+  },
+  logoutButton: {
+    backgroundColor: '#003366',
+    paddingVertical: 12,
+    paddingHorizontal: 30,
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    elevation: 5,
+    shadowColor: '#ff5c5c',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+  },
+  logoutButtonText: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: 'bold',
   },
 });
+
+export default AccountScreen;

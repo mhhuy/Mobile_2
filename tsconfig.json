@@ -13,5 +13,5 @@
     "**/*.tsx",
     ".expo/types/**/*.ts",
     "expo-env.d.ts"
-  ]
+, "app/screens/Products.tsx", "app/detail/[id]/productdetail.tsx", "app/(tabs)/search.jsx"  ]
 }

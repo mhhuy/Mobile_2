@@ -14,7 +14,7 @@ export default function TabLayout() {
         headerShown: false,
       }}>
       <Tabs.Screen
-        name="index"
+        name="home"
         options={{
           title: 'Home',
           tabBarIcon: ({ color, focused }) => (
@@ -23,11 +23,22 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="index"
         options={{
-          title: 'Explore',
+          title: 'Start',
+          tabBarButton: () => (null
+          ),
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'code-slash' : 'code-slash-outline'} color={color} />
+            <TabBarIcon name={focused ? 'home' : 'home-outline'} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="cart"
+        options={{
+          title: 'Cart',
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon name={focused ? 'cart' : 'cart-outline'} color={color} />
           ),
         }}
       />
@@ -41,18 +52,44 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="signup"
+        name="signin"
         options={{
-          title: 'Signup',
+          title: 'Signin',
+          tabBarButton: () => (null
+          ),
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'trail-sign' : 'trail-sign-outline'} color={color} />
+            <TabBarIcon name={focused ? 'person' : 'person-outline'} color={color} />
           ),
         }}
       />
       <Tabs.Screen
-        name="signin"
+        name="signup"
         options={{
-          title: 'Signin',
+          title: 'Signup',
+          tabBarButton: () => (null
+          ),
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon name={focused ? 'person' : 'person-outline'} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="search"
+        options={{
+          title: 'Search',
+          tabBarButton: () => (null
+          ),
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon name={focused ? 'person' : 'person-outline'} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="header"
+        options={{
+          title: 'Header',
+          tabBarButton: () => (null
+          ),
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon name={focused ? 'person' : 'person-outline'} color={color} />
           ),
